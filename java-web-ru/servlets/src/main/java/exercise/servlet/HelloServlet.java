@@ -1,7 +1,6 @@
 package exercise.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,7 +14,7 @@ public class HelloServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
-        String message = name.isEmpty() ? "Hello, Guest!" : "Hello, " + name + "!";
+        String message = name == null ? "Hello, Guest!" : "Hello, " + name + "!";
         req.setAttribute("message", message);
         req.getRequestDispatcher("/WEB-INF/hello.jsp").forward(req, resp);
     }
