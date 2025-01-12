@@ -9,10 +9,8 @@ public final class App {
 
         // BEGIN
         var app = Javalin.create();
-        app.get("/phones", context ->
-                context.result(new ObjectMapper().writeValueAsString(Data.getPhones())));
-        app.get("/domains", context ->
-                context.result(new ObjectMapper().writeValueAsString(Data.getDomains())));
+        app.get("/phones", context -> context.json(Data.getPhones()));
+        app.get("/domains", context -> context.json(Data.getDomains()));
         return app;
         // END
     }
