@@ -34,12 +34,7 @@ public final class App {
         });
 
         // BEGIN
-        app.exception(ValidationException.class, (e, ctx) -> {
-            var title = ctx.formParam("title");
-            var body = ctx.formParam("content");
-            var page = new BuildArticlePage(title, body, e.getErrors());
-            ctx.status(422).render("articles/build.jte", model("page", page));
-        });
+
 
         app.get("/articles/build", ctx -> {
             BuildArticlePage page = new BuildArticlePage();
@@ -63,8 +58,9 @@ public final class App {
                 ArticleRepository.save(article);
                 ctx.redirect("/articles");
             } catch (ValidationException e) {
-                var page = new BuildArticlePage(title.get(), body.get(), e.getErrors());
-                System.out.println(ctx.status() + " ctx status");
+                var title2 = ctx.formParam("title");
+                var content = ctx.formParam("content");
+                var page = new BuildArticlePage(title2, content, e.getErrors());
                 ctx.render("articles/build.jte", model("page", page)).status(422);
             }
         });
