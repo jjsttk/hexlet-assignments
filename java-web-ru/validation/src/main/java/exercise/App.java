@@ -44,14 +44,12 @@ public final class App {
         });
 
         app.post("/articles", ctx -> {
-            var title = ctx.formParamAsClass("title", String.class);
-            var body =  ctx.formParamAsClass("content", String.class);
             try {
-                var checkedArticleTitle = title
+                var checkedArticleTitle = ctx.formParamAsClass("title", String.class)
                         .check((name -> name.length() >= 2), "Название не должно быть короче двух символов")
                         .check((name -> !ArticleRepository.existsByTitle(name)), "Статья с таким названием уже существует")
                         .get();
-                var checkedArticleBody = body
+                var checkedArticleBody = ctx.formParamAsClass("content", String.class)
                         .check((text -> text.length() >= 10), "Статья должна быть не короче 10 символов")
                         .get();
                 var article = new Article(checkedArticleTitle, checkedArticleBody);
