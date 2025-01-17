@@ -58,9 +58,7 @@ public final class App {
                 ArticleRepository.save(article);
                 ctx.redirect("/articles");
             } catch (ValidationException e) {
-                var title2 = ctx.formParam("title");
-                var content = ctx.formParam("content");
-                var page = new BuildArticlePage(title2, content, e.getErrors());
+                var page = new BuildArticlePage(ctx.formParam("title"), ctx.formParam("content"), e.getErrors());
                 ctx.render("articles/build.jte", model("page", page)).status(422);
             }
         });
