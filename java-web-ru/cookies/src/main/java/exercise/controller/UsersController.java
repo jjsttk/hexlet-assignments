@@ -24,7 +24,7 @@ public class UsersController {
         var email = ctx.formParamAsClass("email", String.class).get();
         var password = ctx.formParamAsClass("password", String.class).get();
         var token = Security.generateToken();
-        var newUser = new User(firstName, lastName, email, password, token);
+        var newUser = new User(firstName, lastName, email, Security.encrypt(password), token);
 
         UserRepository.save(newUser);
         ctx.cookie("token", token);
