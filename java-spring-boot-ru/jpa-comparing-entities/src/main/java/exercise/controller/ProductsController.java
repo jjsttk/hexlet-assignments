@@ -42,7 +42,7 @@ public class ProductsController {
         var duplicate = productRepository.findBy(example,
                 FluentQuery.FetchableFluentQuery::first);
         if (duplicate.isPresent()) {
-            throw new ResourceAlreadyExistsException("asd");
+            throw new ResourceAlreadyExistsException("Product " + product.getTitle() + " already exists");
         }
 
         return productRepository.save(product);
